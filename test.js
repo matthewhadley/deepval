@@ -15,6 +15,11 @@ var testExpected = {
   a: {
     b: {
       c: 'voo'
+    },
+    d: {
+      e: {
+        f: 'foo'
+      }
     }
   }
 };
@@ -34,5 +39,11 @@ describe('setting values sets correct value', function () {
   });
   it('deep set', function () {
     assert.equal(deepval(test, 'a.b.c', 'voo'), testExpected.a.b.c, 'deep value set');
+  });
+});
+
+describe('setting values on non-existent paths', function () {
+  it('creates the parent objects', function () {
+    assert.equal(deepval(test, 'a.d.e.f', 'foo'), testExpected.a.d.e.f, 'intermediate non-existent objects created');
   });
 });
