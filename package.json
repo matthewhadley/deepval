@@ -1,6 +1,6 @@
 {
   "name": "deepval",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {
@@ -11,5 +11,23 @@
   "devDependencies": {
     "chai": "~1.7.2",
     "mocha": "~1.12.0"
+  },
+  "dependencies": {
+    "chai": "~1.7.2"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/diffsky/deepval.git"
+  },
+  "keywords": [
+    "config",
+    "object",
+    "string",
+    "keys",
+    "dot",
+    "notation"
+  ],
+  "bugs": {
+    "url": "https://github.com/diffsky/deepval/issues"
   }
 }
