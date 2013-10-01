@@ -21,6 +21,9 @@ var testExpected = {
         f: 'foo'
       }
     }
+  },
+  g: {
+    empty: 'ok'
   }
 };
 
@@ -45,5 +48,11 @@ describe('setting values sets correct value', function () {
 describe('setting values on non-existent paths', function () {
   it('creates the parent objects', function () {
     assert.equal(deepval(test, 'a.d.e.f', 'foo'), testExpected.a.d.e.f, 'intermediate non-existent objects created');
+  });
+});
+
+describe('can set deep values that are empty', function () {
+  it('deep values that are empty', function () {
+    assert.equal(deepval(test, 'g.empty', 'ok'), testExpected.g.empty, 'deep value set empty');
   });
 });
