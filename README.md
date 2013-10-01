@@ -1,3 +1,3 @@
-# deepval
+# deepval [![](https://travis-ci.org/diffsky/deepval.png)](https://travis-ci.org/diffsky/deepval)
 
-get and set object values using dot-delimited key strings
+Get and set object values using dot-delimited key strings
