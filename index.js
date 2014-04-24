@@ -1,4 +1,4 @@
-module.exports = function(obj, path, value){
+module.exports = function(obj, path, value, remove){
   path = path.split('.');
   var pl = path.length - 1;
 
@@ -10,7 +10,11 @@ module.exports = function(obj, path, value){
   }
 
   if(typeof value !== 'undefined'){
-    obj[path[pl]] = value;
+    if(remove) {
+      return delete obj[path[pl]];
+    } else {
+      obj[path[pl]] = value;
+    }
   }
   return obj[path[pl]];
 };

@@ -1,6 +1,6 @@
 {
   "name": "deepval",
-  "version": "0.0.5",
+  "version": "1.0.0",
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {

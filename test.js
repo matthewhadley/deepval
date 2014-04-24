@@ -56,3 +56,10 @@ describe('can set deep values that are empty', function () {
     assert.equal(deepval(test, 'g.empty', 'ok'), testExpected.g.empty, 'deep value set empty');
   });
 });
+
+describe('can remove values', function () {
+  it('values are removed', function () {
+    deepval(test, 'foo', null, true);
+    assert.equal(deepval(test, 'foo'), undefined, 'value is undefined');
+  });
+});
