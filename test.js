@@ -36,6 +36,18 @@ describe('getting values returns correct key value', function () {
   });
 });
 
+describe('getting non-existent values return undefined', function () {
+  it('shallow values', function () {
+    assert.equal(deepval(test, 'z'), undefined, 'shallow undefined get');
+  });
+  it('middle deep values', function () {
+    assert.equal(deepval(test, 'a.e.c'), undefined, 'deep undefined get');
+  });
+  it('end deep values', function () {
+    assert.equal(deepval(test, 'a.b.d'), undefined, 'end deep undefined get');
+  });
+});
+
 describe('setting values sets correct value', function () {
   it('shallow set', function () {
     assert.equal(deepval(test, 'foo', 'voo'), testExpected.foo, 'shallow value set');
