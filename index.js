@@ -1,3 +1,5 @@
+'use strict';
+
 module.exports = function(obj, path, value, remove){
   path = path.split('.');
   var pl = path.length - 1;
