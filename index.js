@@ -8,6 +8,9 @@ module.exports = function(obj, path, value, remove){
     if(typeof value !== 'undefined' && typeof obj[path[i]] === 'undefined'){
       obj[path[i]] = {};
     }
+    else if (!obj.hasOwnProperty(path[i])) {
+	return undefined;
+    }
     obj = obj[path[i]];
   }
 
