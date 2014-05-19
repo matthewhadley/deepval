@@ -24,7 +24,7 @@ gulp.task('lintspaces', function() {
           for(var ln in errors[file]) {
             errors[file][ln].forEach(function(err){
               total ++;
-              console.log('  ', clc.blackBright(ln), err);
+              console.log('  ', clc.blackBright(ln) + ':', err);
             });
           }
         }
@@ -33,8 +33,7 @@ gulp.task('lintspaces', function() {
           problem = 'problems';
         }
         console.log('\n' + clc.red('✖', total, problem, '\n'));
-        // return non-zero exit code
-        process.exit(1);
+        gulp.fail = true;
       }
     })
     .pipe(through2.obj(function(file, enc, cb) {
@@ -53,8 +52,7 @@ gulp.task('eslint', function() {
     .pipe(eslint.format())
     .on('end', function(){
       if(errors){
-        // return non-zero exit code
-        process.exit(1);
+        gulp.fail = true;
       }
     })
     .pipe(eslint.failOnError())
@@ -62,4 +60,11 @@ gulp.task('eslint', function() {
       // record that there have been errors
       errors = true;
     });
+});
+
+process.on('exit', function () {
+  if(gulp.fail) {
+    // return non-zero exit code
+    process.exit(1);
+  }
 });
