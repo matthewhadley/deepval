@@ -1,0 +1,17 @@
+{
+  "rules": {
+    "quotes": [2, "single"],
+    "no-unused-vars": [2, {"vars": "local", "args": "none"}],
+    "no-global-strict": 0
+  },
+  "globals": {
+    "it": true,
+    "describe": true,
+    "before": true,
+    "after": true
+  },
+  "env":{
+    "browser": true,
+    "node": true
+  }
+}

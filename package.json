@@ -1,17 +1,22 @@
 {
   "name": "deepval",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/istanbul/lib/cli.js cover -- node_modules/mocha/bin/_mocha test.js --colors --reporter spec"
+    "test": "./node_modules/gulp/bin/gulp.js && node_modules/istanbul/lib/cli.js cover -- node_modules/mocha/bin/_mocha test.js --colors --reporter spec"
   },
   "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT",
   "devDependencies": {
     "chai": "~1.7.2",
     "mocha": "~1.12.0",
-    "istanbul": "~0.1.44"
+    "istanbul": "~0.1.44",
+    "gulp": "^3.6.2",
+    "gulp-eslint": "^0.1.6",
+    "gulp-lintspaces": "^0.2.0",
+    "cli-color": "^0.3.2",
+    "through2": "^0.4.1"
   },
   "dependencies": {
     "chai": "~1.7.2"

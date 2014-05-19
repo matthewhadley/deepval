@@ -1,7 +1,7 @@
 'use strict';
 
-var assert = require('chai').assert,
-    deepval = require('./index');
+var assert = require('chai').assert;
+var deepval = require('./index');
 
 var test = {
   foo: 'bar',
