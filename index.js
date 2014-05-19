@@ -9,7 +9,7 @@ module.exports = function(obj, path, value, remove){
       obj[path[i]] = {};
     }
     else if (!obj.hasOwnProperty(path[i])) {
-	return undefined;
+      return undefined;
     }
     obj = obj[path[i]];
   }
