@@ -24,7 +24,7 @@ gulp.task('lintspaces', function() {
           for(var ln in errors[file]) {
             errors[file][ln].forEach(function(err){
               total ++;
-              console.log('  ', clc.blackBright(ln) + ':', err);
+              console.log('  ', clc.blackBright(ln + ':'), err);
             });
           }
         }
@@ -46,19 +46,14 @@ gulp.task('lintspaces', function() {
 });
 
 gulp.task('eslint', function() {
-  var errors;
   return gulp.src('*.js')
     .pipe(eslint())
-    .pipe(eslint.format())
-    .on('end', function(){
-      if(errors){
+    .pipe(eslint.formatEach())
+    .on('data', function(data){
+      if(data.eslint && data.eslint.messages.length){
+        // record that there have been errors
         gulp.fail = true;
       }
-    })
-    .pipe(eslint.failOnError())
-    .on('error', function(){
-      // record that there have been errors
-      errors = true;
     });
 });
 
