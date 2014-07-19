@@ -8,7 +8,9 @@ var test = {
   a: {
     b: {
       c: 'deep'
-    }
+    },
+    d: ['foo'],
+    e: [['bar']]
   }
 };
 
@@ -26,7 +28,9 @@ var testExpected = {
   },
   g: {
     empty: 'ok'
-  }
+  },
+  h: ['foo'],
+  i: [['bar'], ['zzz']]
 };
 
 describe('getting values returns correct key value', function () {
@@ -35,6 +39,28 @@ describe('getting values returns correct key value', function () {
   });
   it('deep values', function () {
     assert.equal(deepval(test, 'a.b.c'), 'deep', 'deep value get');
+  });
+});
+
+describe('getting values in arrays returns correct key value', function () {
+  it('shallow array value', function () {
+    assert.equal(deepval(test, 'a.d.0'), 'foo', 'shallow array value get');
+  });
+  it('nested array values', function () {
+    assert.equal(deepval(test, 'a.e.0.0'), 'bar', 'nested array value get');
+  });
+});
+
+describe('setting values in arrays works', function () {
+  it('set shallow array value', function () {
+    assert.equal(deepval(test, 'h', ['foo'])[0], testExpected.h[0], 'shallow array value set');
+  });
+
+  it('set nested array value', function () {
+    deepval(test, 'i.0.0', 'bar');
+    deepval(test, 'i.0.1', 'zzz');
+    assert.equal(deepval(test, 'i.0.0'), 'bar', 'first nested array value set');
+    assert.equal(deepval(test, 'i.0.1'), 'zzz', 'second nested array value set');
   });
 });
 
