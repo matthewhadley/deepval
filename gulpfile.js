@@ -2,63 +2,27 @@
 'use strict';
 
 var gulp = require('gulp');
-var eslint = require('gulp-eslint');
-var lintspaces = require('gulp-lintspaces');
-var through2 = require('through2');
-var clc = require('cli-color');
+var path = require('path');
+var parseArgs = require('minimist');
 
-gulp.task('default', ['eslint', 'lintspaces'], function() {});
+var conf = {
+  args: parseArgs(process.argv.slice(2)),
+  gwd: __dirname
+};
 
-gulp.task('lintspaces', function() {
-  var errors;
-  return gulp.src('*.js')
-    .pipe(lintspaces({
-      editorconfig: '.editorconfig'
-    }))
-    .on('end', function(){
-      if(errors){
-        console.log();
-        var total = 0;
-        for(var file in errors){
-          console.log(clc.underline(file));
-          for(var ln in errors[file]) {
-            errors[file][ln].forEach(function(err){
-              total ++;
-              console.log('  ', clc.blackBright(ln + ':'), err);
-            });
-          }
-        }
-        var problem = 'problem';
-        if(total !== 1){
-          problem = 'problems';
-        }
-        console.log('\n' + clc.red('✖', total, problem, '\n'));
-        gulp.fail = true;
-      }
-    })
-    .pipe(through2.obj(function(file, enc, cb) {
-      if(Object.keys(file.lintspaces).length) {
-        errors = errors || {};
-        errors[file.path] = file.lintspaces;
-      }
-      cb();
-    }));
+// combine all the gulp tasks
+require('fs').readdirSync('./gulp').forEach(function(file) {
+  if (path.extname(file) === '.js') {
+    require('./gulp/' + file)(gulp, conf);
+  }
 });
 
-gulp.task('eslint', function() {
-  return gulp.src('*.js')
-    .pipe(eslint())
-    .pipe(eslint.formatEach())
-    .on('data', function(data){
-      if(data.eslint && data.eslint.messages.length){
-        // record that there have been errors
-        gulp.fail = true;
-      }
-    });
+gulp.task('default', function() {
+  console.log('gulp!');
 });
 
-process.on('exit', function () {
-  if(gulp.fail) {
+process.on('exit', function() {
+  if (gulp.fail) {
     // return non-zero exit code
     process.exit(1);
   }

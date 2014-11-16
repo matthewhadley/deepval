@@ -1,22 +1,23 @@
 {
   "name": "deepval",
-  "version": "1.1.4",
+  "version": "1.1.5",
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {
-    "test": "./node_modules/gulp/bin/gulp.js && node_modules/istanbul/lib/cli.js cover -- node_modules/mocha/bin/_mocha test.js --colors --reporter spec"
+    "test": "alias gulp=./node_modules/gulp/bin/gulp.js;gulp eslint && gulp beautify && node_modules/istanbul/lib/cli.js cover -- node_modules/mocha/bin/_mocha test/index.js --no-colors --reporter spec"
   },
   "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "istanbul": "~0.1.44",
-    "gulp": "^3.6.2",
-    "gulp-eslint": "^0.1.6",
-    "gulp-lintspaces": "^0.2.0",
-    "cli-color": "^0.3.2",
-    "through2": "^0.4.1",
-    "chai": "^1.7.2",
-    "mocha": "^1.20.1"
+    "chai": "^1.10.0",
+    "gulp": "^3.8.10",
+    "gulp-diff": "^0.3.1",
+    "gulp-eslint": "^0.1.8",
+    "gulp-jsbeautifier": "0.0.3",
+    "istanbul": "~0.3.2",
+    "minimist": "^1.1.0",
+    "mocha": "^2.0.1",
+    "through2": "^0.6.3"
   },
   "contributors": [
     "Dan VerWeire (https://github.com/wankdanker)"
