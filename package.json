@@ -4,7 +4,7 @@
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {
-    "test": "alias gulp=./node_modules/gulp/bin/gulp.js;gulp eslint && gulp beautify && node_modules/istanbul/lib/cli.js cover -- node_modules/mocha/bin/_mocha test/index.js --no-colors --reporter spec"
+    "test": "alias gulp=./node_modules/gulp/bin/gulp.js;gulp eslint && gulp beautify && node_modules/istanbul/lib/cli.js cover -- node_modules/mocha/bin/_mocha test/index.js --reporter spec"
   },
   "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT",
