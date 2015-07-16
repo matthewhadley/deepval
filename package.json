@@ -1,6 +1,6 @@
 {
   "name": "deepval",
-  "version": "1.1.5",
+  "version": "1.1.6",
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {
@@ -9,15 +9,15 @@
   "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^1.10.0",
-    "gulp": "^3.8.10",
+    "chai": "^3.0.0",
+    "gulp": "^3.9.0",
     "gulp-diff": "^0.3.1",
-    "gulp-eslint": "^0.1.8",
-    "gulp-jsbeautifier": "0.0.3",
-    "istanbul": "~0.3.2",
-    "minimist": "^1.1.0",
-    "mocha": "^2.0.1",
-    "through2": "^0.6.3"
+    "gulp-eslint": "^0.15.0",
+    "gulp-jsbeautifier": "1.0.1",
+    "istanbul": "~0.3.17",
+    "minimist": "^1.1.1",
+    "mocha": "^2.2.5",
+    "through2": "^2.0.0"
   },
   "contributors": [
     "Dan VerWeire (https://github.com/wankdanker)"
