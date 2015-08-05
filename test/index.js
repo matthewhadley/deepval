@@ -47,6 +47,15 @@ describe('getting values returns correct key value', function() {
   });
 });
 
+describe('getting values via .get returns correct key value', function() {
+  it('shallow values', function() {
+    assert.equal(deepval.get(test, 'foo'), 'bar', 'shallow value get');
+  });
+  it('deep values', function() {
+    assert.equal(deepval.get(test, 'a.b.c'), 'deep', 'deep value get');
+  });
+});
+
 describe('getting values in arrays returns correct key value', function() {
   it('shallow array value', function() {
     assert.equal(deepval(test, 'a.d.0'), 'foo', 'shallow array value get');
@@ -90,6 +99,15 @@ describe('setting values sets correct value', function() {
   });
 });
 
+describe('setting values via .set sets correct value', function() {
+  it('shallow set', function() {
+    assert.equal(deepval.set(test, 'foo', 'voo'), testExpected.foo, 'shallow value set');
+  });
+  it('deep set', function() {
+    assert.equal(deepval.set(test, 'a.b.c', 'voo'), testExpected.a.b.c, 'deep value set');
+  });
+});
+
 describe('setting values on non-existent paths', function() {
   it('creates the parent objects', function() {
     assert.equal(deepval(test, 'a.d.e.f', 'foo'), testExpected.a.d.e.f, 'intermediate non-existent objects created');
@@ -106,5 +124,12 @@ describe('can remove values', function() {
   it('values are removed', function() {
     deepval(test, 'foo', null, true);
     assert.equal(deepval(test, 'foo'), undefined, 'value is undefined');
+  });
+});
+
+describe('can remove values via .del', function() {
+  it('values are removed', function() {
+    deepval.del(test, 'foo');
+    assert.equal(deepval.get(test, 'foo'), undefined, 'value is undefined');
   });
 });

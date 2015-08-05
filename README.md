@@ -6,6 +6,14 @@ Get, Set and Remove object values using dot-delimited key strings
 deepval(<object to inspect>, <string path>, [value to set], [boolean: remove])
 ```
 
+or:
+```
+deepval.get(obj, path);
+deepval.set(obj, path, value);
+deepval.del(obj, path);
+```
+
+examples:
 ```
 var obj = {
   a: {
@@ -18,14 +26,14 @@ var obj = {
 };
 
 // get a value
-console.log(deepval(obj, 'a.b.c'))  // 'deep'
+console.log(deepval(obj, 'a.b.c'));   // 'deep'
 // set a value
 deepval(obj, 'a.b.c', 'something');
-console.log(deepval(obj, 'a.b.c'))  // 'something'
+console.log(deepval(obj, 'a.b.c'));   // 'something'
 // remove a value
 deepval(obj, 'a.b.c', null, true);
-console.log(deepval(obj, 'a.b.c'))  // undefined
+console.log(deepval(obj, 'a.b.c'));   // undefined
 // read array values
-console.log(deepval(obj, 'a.d.0'))  // 'foo'
-console.log(deepval(obj, 'a.e.1.0'))  // 'aaa'
+console.log(deepval(obj, 'a.d.0'));   // 'foo'
+console.log(deepval(obj, 'a.e.1.0')); // 'aaa'
 ```

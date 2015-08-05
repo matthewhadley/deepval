@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(obj, path, value, remove) {
+var deepval = function(obj, path, value, remove) {
   path = path.split('.');
   var pl = path.length - 1;
 
@@ -21,4 +21,18 @@ module.exports = function(obj, path, value, remove) {
     }
   }
   return obj[path[pl]];
+};
+
+module.exports = deepval;
+
+module.exports.get = function(obj, path) {
+  return deepval(obj, path);
+};
+
+module.exports.set = function(obj, path, value) {
+  return deepval(obj, path, value);
+};
+
+module.exports.del = function(obj, path) {
+  return deepval(obj, path, null, true);
 };
