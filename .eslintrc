@@ -13,10 +13,7 @@
     "describe": true,
     "before": true,
     "after": true,
-    "define": true,
-    "require": true,
-    "angular": true,
-    "$": true
+    "define": true
   },
   "env":{
     "browser": true,

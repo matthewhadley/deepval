@@ -9,13 +9,13 @@
   "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "chai": "^3.0.0",
+    "chai": "^3.2.0",
     "gulp": "^3.9.0",
     "gulp-diff": "^0.3.1",
-    "gulp-eslint": "^0.15.0",
+    "gulp-eslint": "^1.0.0",
     "gulp-jsbeautifier": "1.0.1",
     "istanbul": "~0.3.17",
-    "minimist": "^1.1.1",
+    "minimist": "^1.1.2",
     "mocha": "^2.2.5",
     "through2": "^2.0.0"
   },
