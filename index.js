@@ -36,3 +36,7 @@ module.exports.set = function(obj, path, value) {
 module.exports.del = function(obj, path) {
   return deepval(obj, path, null, true);
 };
+
+module.exports.dotpath = function() {
+  return Array.prototype.slice.call(arguments).join('.');
+};

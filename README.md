@@ -37,3 +37,9 @@ console.log(deepval(obj, 'a.b.c'));   // undefined
 console.log(deepval(obj, 'a.d.0'));   // 'foo'
 console.log(deepval(obj, 'a.e.1.0')); // 'aaa'
 ```
+
+deepval provides a utility function `dotpath` to create a dot-delimited string
+from a set of passed arguments:
+```
+console.log(deepval.dotpath('hello', a.b.d))  //  'hello.foo'
+```

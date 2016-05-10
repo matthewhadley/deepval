@@ -1,9 +1,9 @@
 'use strict';
 
-var assert = require('chai').assert;
+var test = require('tape');
 var deepval = require('..');
 
-var test = {
+var data = {
   foo: 'bar',
   a: {
     b: {
@@ -16,7 +16,7 @@ var test = {
   }
 };
 
-var testExpected = {
+var expect = {
   foo: 'voo',
   a: {
     b: {
@@ -38,98 +38,81 @@ var testExpected = {
   ]
 };
 
-describe('getting values returns correct key value', function() {
-  it('shallow values', function() {
-    assert.equal(deepval(test, 'foo'), 'bar', 'shallow value get');
-  });
-  it('deep values', function() {
-    assert.equal(deepval(test, 'a.b.c'), 'deep', 'deep value get');
-  });
+test('getting values returns correct key value', function(t) {
+  t.plan(4);
+  t.equal(deepval(data, 'foo'), 'bar', 'shallow value get');
+  t.equal(deepval(data, 'a.b.c'), 'deep', 'deep value get');
+  t.equal(deepval(data, 'foo'), 'bar', 'shallow value get');
+  t.equal(deepval(data, 'a.b.c'), 'deep', 'deep value get');
 });
 
-describe('getting values via .get returns correct key value', function() {
-  it('shallow values', function() {
-    assert.equal(deepval.get(test, 'foo'), 'bar', 'shallow value get');
-  });
-  it('deep values', function() {
-    assert.equal(deepval.get(test, 'a.b.c'), 'deep', 'deep value get');
-  });
+test('getting values via .get returns correct key value', function(t) {
+  t.plan(2);
+  t.equal(deepval.get(data, 'foo'), 'bar', 'shallow value get');
+  t.equal(deepval.get(data, 'a.b.c'), 'deep', 'deep value get');
 });
 
-describe('getting values in arrays returns correct key value', function() {
-  it('shallow array value', function() {
-    assert.equal(deepval(test, 'a.d.0'), 'foo', 'shallow array value get');
-  });
-  it('nested array values', function() {
-    assert.equal(deepval(test, 'a.e.0.0'), 'bar', 'nested array value get');
-  });
+test('getting values in arrays returns correct key value', function(t) {
+  t.plan(2);
+  t.equal(deepval(data, 'a.d.0'), 'foo', 'shallow array value get');
+  t.equal(deepval(data, 'a.e.0.0'), 'bar', 'nested array value get');
 });
 
-describe('setting values in arrays works', function() {
-  it('set shallow array value', function() {
-    assert.equal(deepval(test, 'h', ['foo'])[0], testExpected.h[0], 'shallow array value set');
-  });
+test('setting values in arrays works', function(t) {
+  t.plan(3);
+  t.equal(deepval(data, 'h', ['foo'])[0], expect.h[0], 'shallow array value set');
 
-  it('set nested array value', function() {
-    deepval(test, 'i.0.0', 'bar');
-    deepval(test, 'i.0.1', 'zzz');
-    assert.equal(deepval(test, 'i.0.0'), 'bar', 'first nested array value set');
-    assert.equal(deepval(test, 'i.0.1'), 'zzz', 'second nested array value set');
-  });
+  deepval(data, 'i.0.0', 'bar');
+  deepval(data, 'i.0.1', 'zzz');
+  t.equal(deepval(data, 'i.0.0'), 'bar', 'first nested array value set');
+  t.equal(deepval(data, 'i.0.1'), 'zzz', 'second nested array value set');
 });
 
-describe('getting non-existent values return undefined', function() {
-  it('shallow values', function() {
-    assert.equal(deepval(test, 'z'), undefined, 'shallow undefined get');
-  });
-  it('middle deep values', function() {
-    assert.equal(deepval(test, 'a.e.c'), undefined, 'deep undefined get');
-  });
-  it('end deep values', function() {
-    assert.equal(deepval(test, 'a.b.d'), undefined, 'end deep undefined get');
-  });
+test('getting non-existent values return undefined', function(t) {
+  t.plan(3);
+  t.equal(deepval(data, 'z'), undefined, 'shallow undefined get');
+  t.equal(deepval(data, 'a.e.c'), undefined, 'deep undefined get');
+  t.equal(deepval(data, 'a.b.d'), undefined, 'end deep undefined get');
 });
 
-describe('setting values sets correct value', function() {
-  it('shallow set', function() {
-    assert.equal(deepval(test, 'foo', 'voo'), testExpected.foo, 'shallow value set');
-  });
-  it('deep set', function() {
-    assert.equal(deepval(test, 'a.b.c', 'voo'), testExpected.a.b.c, 'deep value set');
-  });
+test('setting values sets correct value', function(t) {
+  t.plan(2);
+  t.equal(deepval(data, 'foo', 'voo'), expect.foo, 'shallow value set');
+  t.equal(deepval(data, 'a.b.c', 'voo'), expect.a.b.c, 'deep value set');
 });
 
-describe('setting values via .set sets correct value', function() {
-  it('shallow set', function() {
-    assert.equal(deepval.set(test, 'foo', 'voo'), testExpected.foo, 'shallow value set');
-  });
-  it('deep set', function() {
-    assert.equal(deepval.set(test, 'a.b.c', 'voo'), testExpected.a.b.c, 'deep value set');
-  });
+test('setting values via .set sets correct value', function(t) {
+  t.plan(2);
+  t.equal(deepval.set(data, 'foo', 'voo'), expect.foo, 'shallow value set');
+  t.equal(deepval.set(data, 'a.b.c', 'voo'), expect.a.b.c, 'deep value set');
 });
 
-describe('setting values on non-existent paths', function() {
-  it('creates the parent objects', function() {
-    assert.equal(deepval(test, 'a.d.e.f', 'foo'), testExpected.a.d.e.f, 'intermediate non-existent objects created');
-  });
+test('setting values on non-existent paths', function(t) {
+  t.plan(1);
+  t.equal(deepval(data, 'a.d.e.f', 'foo'), expect.a.d.e.f, 'intermediate non-existent objects created');
 });
 
-describe('can set deep values that are empty', function() {
-  it('deep values that are empty', function() {
-    assert.equal(deepval(test, 'g.empty', 'ok'), testExpected.g.empty, 'deep value set empty');
-  });
+test('can set deep values that are empty', function(t) {
+  t.plan(1);
+  t.equal(deepval(data, 'g.empty', 'ok'), expect.g.empty, 'deep value set empty');
 });
 
-describe('can remove values', function() {
-  it('values are removed', function() {
-    deepval(test, 'foo', null, true);
-    assert.equal(deepval(test, 'foo'), undefined, 'value is undefined');
-  });
+test('can remove values', function(t) {
+  t.plan(1);
+  deepval(data, 'foo', null, true);
+  t.equal(deepval(data, 'foo'), undefined, 'value is undefined');
 });
 
-describe('can remove values via .del', function() {
-  it('values are removed', function() {
-    deepval.del(test, 'foo');
-    assert.equal(deepval.get(test, 'foo'), undefined, 'value is undefined');
-  });
+test('can remove values via .del', function(t) {
+  t.plan(1);
+  deepval.del(data, 'foo');
+  t.equal(deepval.get(data, 'foo'), undefined, 'value is undefined');
+});
+
+test('provides a utlity function to join variables as a dotpath', function(t) {
+  t.plan(1)
+  var a = 'hello';
+  var b = 'test';
+  deepval.dotpath(a, 'world', b);
+  t.equal(deepval.dotpath(a, 'world', b), 'hello.world.test', 'dotpath is created correctly');
 });
