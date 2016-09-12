@@ -38,6 +38,19 @@ var expect = {
   ]
 };
 
+var deepData = function() {
+  this._key = 'test';
+};
+deepData.prototype = {
+  constructor: deepData,
+  get key() {
+    return this._key;
+  },
+  set key(k) {
+    this._key = k;
+  }
+};
+
 test('getting values returns correct key value', function(t) {
   t.plan(4);
   t.equal(deepval(data, 'foo'), 'bar', 'shallow value get');
@@ -110,9 +123,27 @@ test('can remove values via .del', function(t) {
 });
 
 test('provides a utlity function to join variables as a dotpath', function(t) {
-  t.plan(1)
+  t.plan(1);
   var a = 'hello';
   var b = 'test';
   deepval.dotpath(a, 'world', b);
   t.equal(deepval.dotpath(a, 'world', b), 'hello.world.test', 'dotpath is created correctly');
+});
+
+test('getting deep values (follow chain) values via .deep returns correct key value', function(t) {
+  t.plan(2);
+  var a = {
+    b: new deepData()
+  };
+  t.equal(deepval(a, 'b.key', undefined, false, true), 'test', 'getting values through getters works with flag');
+  t.equal(deepval.deep(a, 'b.key'), 'test', 'getting values through getters works');
+});
+
+test('setting deep values via .deep sets correct value', function(t) {
+  t.plan(2);
+  var a = {
+    b: new deepData()
+  };
+  t.equal(deepval.deep(a, 'b.key', 'deepset'), a.b.key, 'setting values through setters works');
+  t.equal(deepval.deep(a, 'b.key'), 'deepset', 'setting values through setters returns correct value');
 });

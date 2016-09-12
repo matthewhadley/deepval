@@ -1,13 +1,18 @@
 'use strict';
 
-var deepval = function(obj, path, value, remove) {
+var hasOwn = Object.prototype.hasOwnProperty;
+var hasDeep = function(key) {
+  return !!(key && this[key]);
+};
+
+var deepval = function(obj, path, value, remove, ignoreOwn) {
   path = path.split('.');
   var pl = path.length - 1;
 
   for (var i = 0; i < pl; i += 1) {
     if (typeof value !== 'undefined' && typeof obj[path[i]] === 'undefined') {
       obj[path[i]] = {};
-    } else if (!obj.hasOwnProperty(path[i])) {
+    } else if (!(ignoreOwn ? hasDeep : hasOwn).call(obj, path[i])) {
       return undefined;
     }
     obj = obj[path[i]];
@@ -39,4 +44,8 @@ module.exports.del = function(obj, path) {
 
 module.exports.dotpath = function() {
   return Array.prototype.slice.call(arguments).join('.');
+};
+
+module.exports.deep = function(obj, path, value, remove) {
+  return deepval(obj, path, value, remove, true);
 };
