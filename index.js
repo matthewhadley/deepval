@@ -7,7 +7,7 @@ var deepval = function(obj, path, value, remove) {
   for (var i = 0; i < pl; i += 1) {
     if (typeof value !== 'undefined' && typeof obj[path[i]] === 'undefined') {
       obj[path[i]] = {};
-    } else if (!obj.hasOwnProperty(path[i])) {
+    } else if (!obj.hasOwnProperty(path[i]) || typeof obj[path[i]] === 'undefined') {
       return undefined;
     }
     obj = obj[path[i]];
