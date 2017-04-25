@@ -3,7 +3,7 @@
 Get, Set and Remove object values using dot-delimited key strings
 
 ```
-deepval(<object to inspect>, <string path>, [value to set], [boolean: remove])
+deepval(<object to inspect>, <string path> or <array of string keys>, [value to set], [boolean: remove])
 ```
 
 or:
@@ -35,6 +35,7 @@ deepval(obj, 'a.b.c', null, true);
 console.log(deepval(obj, 'a.b.c'));   // undefined
 // read array values
 console.log(deepval(obj, 'a.d.0'));   // 'foo'
+console.log(deepval(obj, ['a', 'd', 0]));   // 'foo'
 console.log(deepval(obj, 'a.e.1.0')); // 'aaa'
 ```
 

@@ -20,7 +20,8 @@ var expect = {
   foo: 'voo',
   a: {
     b: {
-      c: 'voo'
+      c: 'voo',
+      c1: 'voo'
     },
     d: {
       e: {
@@ -39,11 +40,12 @@ var expect = {
 };
 
 test('getting values returns correct key value', function(t) {
-  t.plan(4);
+  t.plan(5);
   t.equal(deepval(data, 'foo'), 'bar', 'shallow value get');
   t.equal(deepval(data, 'a.b.c'), 'deep', 'deep value get');
   t.equal(deepval(data, 'foo'), 'bar', 'shallow value get');
   t.equal(deepval(data, 'a.b.c'), 'deep', 'deep value get');
+  t.equal(deepval(data, ['a', 'b', 'c']), 'deep', 'deep value get via an array');
 });
 
 test('getting values via .get returns correct key value', function(t) {
@@ -53,8 +55,9 @@ test('getting values via .get returns correct key value', function(t) {
 });
 
 test('getting values in arrays returns correct key value', function(t) {
-  t.plan(2);
+  t.plan(3);
   t.equal(deepval(data, 'a.d.0'), 'foo', 'shallow array value get');
+  t.equal(deepval(data, ['a', 'd', 0]), 'foo', 'shallow array value get with array path');
   t.equal(deepval(data, 'a.e.0.0'), 'bar', 'nested array value get');
 });
 
@@ -76,9 +79,10 @@ test('getting non-existent values return undefined', function(t) {
 });
 
 test('setting values sets correct value', function(t) {
-  t.plan(2);
+  t.plan(3);
   t.equal(deepval(data, 'foo', 'voo'), expect.foo, 'shallow value set');
   t.equal(deepval(data, 'a.b.c', 'voo'), expect.a.b.c, 'deep value set');
+  t.equal(deepval(data, ['a', 'b', 'c1'], 'voo'), expect.a.b.c1, 'deep value set via an array');
 });
 
 test('setting values via .set sets correct value', function(t) {

@@ -1,7 +1,9 @@
 'use strict';
 
 var deepval = function(obj, path, value, remove) {
-  path = path.split('.');
+  if (!Array.isArray(path)) {
+    path = path.split('.');
+  }
   var pl = path.length - 1;
 
   for (var i = 0; i < pl; i += 1) {
