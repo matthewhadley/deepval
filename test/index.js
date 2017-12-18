@@ -5,6 +5,9 @@ var deepval = require('..');
 
 var data = {
   foo: 'bar',
+  baz: {
+    qux: 'quux'
+  },
   a: {
     b: {
       c: 'deep'
@@ -18,6 +21,7 @@ var data = {
 
 var expect = {
   foo: 'voo',
+  _null: null,
   a: {
     b: {
       c: 'voo',
@@ -38,6 +42,14 @@ var expect = {
     ['zzz']
   ]
 };
+
+test('does not throw with bad/missing data', function(t) {
+  t.plan(4);
+  t.equal(deepval(undefined, 'foo'), undefined, 'undefined obj');
+  t.equal(deepval(data, 'bar'), undefined, 'missing key');
+  t.equal(deepval(data, 'bar.baz'), undefined, 'missing deeper key');
+  t.equal(deepval(data, 'bar.baz.qux'), undefined, 'missing still deeper key');
+});
 
 test('getting values returns correct key value', function(t) {
   t.plan(5);
@@ -101,16 +113,31 @@ test('can set deep values that are empty', function(t) {
   t.equal(deepval(data, 'g.empty', 'ok'), expect.g.empty, 'deep value set empty');
 });
 
+test('can set values to null', function(t) {
+  t.plan(2);
+  t.equal(deepval(data, 'j', null), expect._null, 'value set to null');
+  t.equal(deepval(data, 'k.l', null), expect._null, 'deeper value set to null');
+});
+
 test('can remove values', function(t) {
   t.plan(1);
   deepval(data, 'foo', null, true);
   t.equal(deepval(data, 'foo'), undefined, 'value is undefined');
 });
 
+test('can remove deep values', function(t) {
+  t.plan(2);
+  deepval(data, 'a.b', null, true);
+  t.equal(deepval(data, 'a.b'), undefined, 'value is undefined');
+  t.equal(deepval(data, 'not.here.at.all'), undefined, 'bad path returns undefined');
+});
+
 test('can remove values via .del', function(t) {
-  t.plan(1);
+  t.plan(2);
   deepval.del(data, 'foo');
+  deepval.del(data, 'bar.baz');
   t.equal(deepval.get(data, 'foo'), undefined, 'value is undefined');
+  t.equal(deepval.get(data, 'foo.bar'), undefined, 'deep value is undefined');
 });
 
 test('provides a utlity function to join variables as a dotpath', function(t) {

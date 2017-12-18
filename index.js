@@ -1,29 +1,37 @@
 'use strict';
 
 var deepval = function(obj, path, value, remove) {
+  if (!obj) { // avoid throwing on a bad obj. just return undefined.
+    return undefined;
+  }
+
   if (!Array.isArray(path)) {
     path = path.split('.');
   }
   var pl = path.length - 1;
 
   for (var i = 0; i < pl; i += 1) {
-    if (typeof value !== 'undefined' && typeof obj[path[i]] === 'undefined') {
-      obj[path[i]] = {};
-    } else if (!obj.hasOwnProperty(path[i]) || typeof obj[path[i]] === 'undefined') {
+    var key = path[i];
+    var pathIsNullOrUndefined = isNullOrUndefined(obj[key]);
+    if (value !== undefined && pathIsNullOrUndefined) {
+      obj[key] = {};
+    } else if (!obj.hasOwnProperty(path[i]) || pathIsNullOrUndefined) {
       return undefined;
     }
     obj = obj[path[i]];
   }
 
-  if (typeof value !== 'undefined') {
-    if (remove) {
-      return delete obj[path[pl]];
-    } else {
-      obj[path[pl]] = value;
-    }
+  if (remove) {
+    return delete obj[path[pl]];
+  } else if (value !== undefined) { // allow setting a value to null
+    obj[path[pl]] = value;
   }
   return obj[path[pl]];
 };
+
+function isNullOrUndefined(val) {
+  return val === undefined || val === null;
+}
 
 module.exports = deepval;
 
