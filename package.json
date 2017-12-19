@@ -1,27 +1,29 @@
 {
   "name": "deepval",
-  "version": "2.3.0",
+  "version": "3.0.0",
   "description": "get and set object values using dot-delimited key strings",
   "main": "index.js",
   "scripts": {
-    "test": "gulp eslint && gulp beautify && npm run test-unit",
-    "test-unit": "tape test/index*.js | tap-spec"
+    "test": "npm run lint && npm run test-unit",
+    "test-unit": "tape test/index*.js | tap-spec",
+    "lint": "eslint **/*.js"
   },
   "author": "Matthew Hadley <matthew.hadley@gmail.com>",
   "license": "MIT",
   "devDependencies": {
-    "covert": "^1.1.0",
-    "gulp": "^3.9.0",
-    "gulp-diff": "^0.3.1",
-    "gulp-eslint": "^1.0.0",
-    "gulp-jsbeautifier": "1.0.1",
-    "minimist": "^1.1.2",
-    "mocha": "^2.2.5",
+    "eslint": "^4.13.1",
+    "eslint-config-semistandard": "^11.0.0",
+    "eslint-config-standard": "^11.0.0-beta.0",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-node": "^5.2.1",
+    "eslint-plugin-promise": "^3.6.0",
+    "eslint-plugin-standard": "^3.0.1",
     "tap-spec": "^4.1.1",
     "tape": "^4.5.1"
   },
   "contributors": [
-    "Dan VerWeire (https://github.com/wankdanker)"
+    "Dan VerWeire (https://github.com/wankdanker)",
+    "Jimmy Byrum (https://github.com/jimmybyrum)"
   ],
   "repository": {
     "type": "git",
@@ -37,5 +39,10 @@
   ],
   "bugs": {
     "url": "https://github.com/diffsky/deepval/issues"
+  },
+  "homepage": "https://github.com/diffsky/deepval#readme",
+  "dependencies": {},
+  "eslintConfig": {
+    "extends": "semistandard"
   }
 }
