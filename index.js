@@ -15,12 +15,18 @@ var deepval = function (obj, path, value, remove) {
     } else if (!obj.hasOwnProperty(path[i]) || (obj[path[i]] === undefined || obj[path[i]] === null)) {
       return undefined;
     }
+    // splice out array elements that are being removed instead of deleting them
+    if (remove && (i === (pl - 1)) && obj[path[i]] instanceof Array) {
+      obj[path[i]].splice(obj[path[i + 1]], 1);
+      return;
+    }
     obj = obj[path[i]];
   }
 
   if (value !== undefined) {
     if (remove) {
-      return delete obj[path[pl]];
+      delete obj[path[pl]];
+      return;
     } else {
       obj[path[pl]] = value;
     }

@@ -5,6 +5,11 @@ var deepval = require('..');
 
 var data = {
   foo: 'bar',
+  del: [
+    'a',
+    'b',
+    'c'
+  ],
   a: {
     b: {
       c: 'deep'
@@ -19,6 +24,10 @@ var data = {
 
 var expect = {
   foo: 'voo',
+  del: [
+    'a',
+    'b'
+  ],
   a: {
     b: {
       c: 'voo',
@@ -105,15 +114,17 @@ test('can set deep values that are empty', function (t) {
 });
 
 test('can remove values', function (t) {
-  t.plan(1);
+  t.plan(2);
   deepval(data, 'foo', null, true);
-  t.equal(deepval(data, 'foo'), undefined, 'value is undefined');
+  t.equal(data.foo, undefined, 'value is undefined');
+  deepval.del(data, 'del.2');
+  t.equal(data.del.length, 2, 'deleted array values are re-indexed');
 });
 
 test('can remove values via .del', function (t) {
   t.plan(1);
   deepval.del(data, 'foo');
-  t.equal(deepval.get(data, 'foo'), undefined, 'value is undefined');
+  t.equal(data.foo, undefined, 'value is undefined');
 });
 
 test('provides a utlity function to join variables as a dotpath', function (t) {
