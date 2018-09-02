@@ -1,4 +1,4 @@
-# deepval [![](https://travis-ci.org/diffsky/deepval.svg)](https://travis-ci.org/diffsky/deepval)
+# deepval [![](https://travis-ci.org/matthewhadley/deepval.svg)](https://travis-ci.org/matthewhadley/deepval)
 
 Get, Set and Remove object values using dot-delimited key strings
 
